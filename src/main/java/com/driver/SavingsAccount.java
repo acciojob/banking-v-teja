@@ -51,12 +51,16 @@ public class SavingsAccount extends BankAccount{
         return simpleInterest+getBalance();
     }
 
-    public double getCompoundInterest(int times, int years){
+    public double getCompoundInterest(int times, int years) throws Exception {
         // Return the final amount considering that bank gives compound interest on current amount given times per year
+        if(times<=0 || years<0){
+            throw new Exception("times cannot be zero");
+        }
         double temp = 1+ (getRate()/(times*100));
+        System.out.println(temp);
         double interest = Math.pow(temp,(times*years));
-        double amount  = getBalance() * interest;
-        return amount;
+        System.out.println(interest);
+        return getBalance() * interest;
 
     }
 
