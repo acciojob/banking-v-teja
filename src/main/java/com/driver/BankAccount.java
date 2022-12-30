@@ -33,7 +33,10 @@ public class BankAccount {
     }
 
 
-    public BankAccount(String name, double balance, double minBalance) {
+    public BankAccount(String name, double balance, double minBalance) throws Exception {
+        if(balance<minBalance){
+            throw new Exception("Balance is less than Minimum Balance");
+        }
         setName(name);
         setBalance(balance);
         setMinBalance(minBalance);
