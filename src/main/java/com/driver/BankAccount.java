@@ -49,18 +49,14 @@ public class BankAccount {
         String accountNumber = "";
         Random rd = new Random();
         for(int i=0;i<digits;i++){
-            boolean flag = true;
-            while(flag){
-                if(sum==0){
-                    accountNumber = accountNumber+"0";
-                    flag = false;
+            if(sum>9){
+                accountNumber+=9;
+                sum-=9;
+            }else{
+                if(i==digits-1){
+                    accountNumber += sum;
                 }else{
-                    int temp = rd.nextInt(10);
-                    if(temp<=sum){
-                        accountNumber = accountNumber+"temp";
-                        sum -= temp;
-                        flag = false;
-                    }
+                    accountNumber+=0;
                 }
             }
         }

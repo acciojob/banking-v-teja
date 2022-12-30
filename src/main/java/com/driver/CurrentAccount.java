@@ -97,8 +97,6 @@ public class CurrentAccount extends BankAccount{
             setTradeLicenseId(res);
         }
 
-
-
     }
 
 }
