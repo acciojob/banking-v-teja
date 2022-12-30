@@ -26,7 +26,7 @@ public class CurrentAccount extends BankAccount{
         for (int i = 0; i < 26; i++) {
             if (count[i] > max) {
                 max = count[i];
-                ch = (char)((int)'a' + i);
+                ch = (char)((int)'A' + i);
             }
         }
         return ch;
@@ -58,11 +58,11 @@ public class CurrentAccount extends BankAccount{
                 count[i] = 0;
             }
             for(char ch: getTradeLicenseId().toCharArray()){
-                count[(int)ch-(int)'a']++;
+                count[(int)ch-(int)'A']++;
             }
 
             char chMax = getMaxCountChar(count);
-            int maxCount = count[(int)chMax - (int)'a'];
+            int maxCount = count[(int)chMax - (int)'A'];
             if (maxCount > (n + 1) / 2){
                 throw new Exception("valid License can not be generated");
             }
@@ -75,21 +75,18 @@ public class CurrentAccount extends BankAccount{
             // filling the most frequently occurring char in the
             // even indices
             while (maxCount > 0) {
-                res = res.substring(0, ind) + chMax
-                        + res.substring(ind + 1);
+                res = res.substring(0, ind) + chMax + res.substring(ind + 1);
                 ind = ind + 2;
                 maxCount--;
             }
-            count[(int)chMax - (int)'a'] = 0;
+            count[(int)chMax - (int)'A'] = 0;
 
             // now filling the other Chars, first filling the
             // even positions and then the odd positions
             for (int i = 0; i < 26; i++) {
                 while (count[i] > 0) {
                     ind = (ind >= n) ? 1 : ind;
-                    res = res.substring(0, ind)
-                            + (char)((int)'a' + i)
-                            + res.substring(ind + 1);
+                    res = res.substring(0, ind) + (char)((int)'A' + i) + res.substring(ind + 1);
                     ind += 2;
                     count[i]--;
                 }
