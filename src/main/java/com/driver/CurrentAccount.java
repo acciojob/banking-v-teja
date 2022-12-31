@@ -14,10 +14,15 @@ public class CurrentAccount extends BankAccount{
     public CurrentAccount(String name, double balance, String tradeLicenseId) throws Exception {
         // minimum balance is 5000 by default. If balance is less than 5000, throw "Insufficient Balance" exception
         super(name,balance,5000);
-        if(getBalance()<5000){
-            throw new Exception("Insufficient Balance");
+        try{
+            if(getBalance()<5000){
+                throw new Exception("Insufficient Balance");
+            }
+        }catch (Exception e){
+            System.out.println(e);
         }
         setTradeLicenseId(tradeLicenseId);
+        validateLicenseId();
     }
 
     public char getMaxCountChar(int[] count){
@@ -39,68 +44,81 @@ public class CurrentAccount extends BankAccount{
         // If it is not possible, throw "Valid License can not be generated" Exception
 
         int n = getTradeLicenseId().length();
-        if(n==0){
-            throw new Exception("Valid License can not be generated");
-        }
-        for(char c : getTradeLicenseId().toCharArray()) {
-            if(Character.isLetter(c) && Character.isLowerCase(c)) {
+        try{
+            if(n==0){
                 throw new Exception("Valid License can not be generated");
             }
+        }catch(Exception e){
+            System.out.println(e);
         }
 
-        boolean flag = true;
-        for(int i=0;i<n-1;i++){
-            char temp1 = getTradeLicenseId().charAt(i);
-            char temp2 = getTradeLicenseId().charAt(i+1);
-            if(temp1==temp2){
-                flag = false;
-                break;
-            }
-        }
-
-        if(flag==false){
-            int count[] = new int[26];
-            for(int i=0;i<26;i++){
-                count[i] = 0;
-            }
-            for(char ch: getTradeLicenseId().toCharArray()){
-                count[(int)ch-(int)'A']++;
-            }
-
-            char chMax = getMaxCountChar(count);
-            int maxCount = count[(int)chMax - (int)'A'];
-            if (maxCount > (n + 1) / 2){
-                throw new Exception("valid License can not be generated");
-            }
-
-            String res = "";
-            for (int i = 0; i < n; i++) {
-                res += ' ';
-            }
-            int ind = 0;
-            // filling the most frequently occurring char in the
-            // even indices
-            while (maxCount > 0) {
-                res = res.substring(0, ind) + chMax
-                        + res.substring(ind + 1);
-                ind = ind + 2;
-                maxCount--;
-            }
-            count[(int)chMax - (int)'A'] = 0;
-
-            // now filling the other Chars, first filling the
-            // even positions and then the odd positions
-            for (int i = 0; i < 26; i++) {
-                while (count[i] > 0) {
-                    ind = (ind >= n) ? 1 : ind;
-                    res = res.substring(0, ind)
-                            + (char)((int)'A' + i)
-                            + res.substring(ind + 1);
-                    ind += 2;
-                    count[i]--;
+        try{
+            for(char c : getTradeLicenseId().toCharArray()) {
+                if(Character.isLetter(c) && Character.isLowerCase(c)) {
+                    throw new Exception("Valid License can not be generated");
                 }
             }
-            setTradeLicenseId(res);
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+        try{
+            boolean flag = true;
+            for(int i=0;i<n-1;i++){
+                char temp1 = getTradeLicenseId().charAt(i);
+                char temp2 = getTradeLicenseId().charAt(i+1);
+                if(temp1==temp2){
+                    flag = false;
+                    break;
+                }
+            }
+
+            if(flag==false){
+                int count[] = new int[26];
+                for(int i=0;i<26;i++){
+                    count[i] = 0;
+                }
+                for(char ch: getTradeLicenseId().toCharArray()){
+                    count[(int)ch-(int)'A']++;
+                }
+
+                char chMax = getMaxCountChar(count);
+                int maxCount = count[(int)chMax - (int)'A'];
+                if (maxCount > (n + 1) / 2){
+                    throw new Exception("valid License can not be generated");
+                }
+
+                String res = "";
+                for (int i = 0; i < n; i++) {
+                    res += ' ';
+                }
+                int ind = 0;
+                // filling the most frequently occurring char in the
+                // even indices
+                while (maxCount > 0) {
+                    res = res.substring(0, ind) + chMax
+                            + res.substring(ind + 1);
+                    ind = ind + 2;
+                    maxCount--;
+                }
+                count[(int)chMax - (int)'A'] = 0;
+
+                // now filling the other Chars, first filling the
+                // even positions and then the odd positions
+                for (int i = 0; i < 26; i++) {
+                    while (count[i] > 0) {
+                        ind = (ind >= n) ? 1 : ind;
+                        res = res.substring(0, ind)
+                                + (char)((int)'A' + i)
+                                + res.substring(ind + 1);
+                        ind += 2;
+                        count[i]--;
+                    }
+                }
+                setTradeLicenseId(res);
+            }
+        }catch (Exception e){
+            System.out.println(e);
         }
 
     }
