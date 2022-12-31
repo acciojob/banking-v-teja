@@ -57,9 +57,7 @@ public class SavingsAccount extends BankAccount{
             throw new Exception("times cannot be zero");
         }
         double temp = 1+ (getRate()/(times*100));
-        System.out.println(temp);
         double interest = Math.pow(temp,(times*years));
-        System.out.println(interest);
         return getBalance() * interest;
 
     }
